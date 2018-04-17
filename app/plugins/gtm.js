@@ -26,7 +26,7 @@ export default ({ app }) => {
     )
     console.log(currentUser)
     dataLayer.push({ 'event': 'pageview' })
-    dataLayer.push(to.gtm || { userID: currentUser })
+    dataLayer.push(to.gtm || { userId: currentUser })
     console.log(to.fullPath)
     dataLayer.push(to.gtm || { pageType: 'PageView', pageUrl: to.fullPath })
   })
