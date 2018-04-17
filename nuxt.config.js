@@ -21,7 +21,8 @@ module.exports = {
   */
   modules: [
     '@nuxtjs/axios',
-    '@nuxtjs/markdownit'
+    '@nuxtjs/markdownit',
+    ['@nuxtjs/google-tag-manager', { id: 'GTM-5DZNDNB' }]
   ],
   markdownit: {
     injected: true,

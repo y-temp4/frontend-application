@@ -12,6 +12,10 @@
     chalk "^2.3.2"
     debug "^3.1.0"
 
+"@nuxtjs/google-tag-manager@^1.1.0":
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/@nuxtjs/google-tag-manager/-/google-tag-manager-1.1.0.tgz#eed6074a87bcfd7a79b7f7a5f092028d1a38efb8"
+
 "@nuxtjs/markdownit-loader@^1.1.1":
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/@nuxtjs/markdownit-loader/-/markdownit-loader-1.1.1.tgz#7223b49064a176394f6f82aad3bf622069004799"
