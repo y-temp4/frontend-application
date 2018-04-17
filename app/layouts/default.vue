@@ -4,6 +4,21 @@
   </div>
 </template>
 
+<script>
+/* eslint-disable no-undef */
+export default {
+  mounted() {
+    const currentUser = localStorage.getItem(
+      `CognitoIdentityServiceProvider.${process.env.CLIENT_ID}.LastAuthUser`
+    )
+    console.log(currentUser)
+    window.dataLayer = window.dataLayer || []
+    dataLayer = [{ userID: currentUser }]
+  }
+}
+</script>
+
+
 <style>
 @import 'normalize.css';
 
