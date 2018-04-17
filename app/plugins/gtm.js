@@ -14,16 +14,21 @@ export default ({ app }) => {
       j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src =
         'https://www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f);
   })(window, document, 'script', 'dataLayer', 'GTM-5DZNDNB');
-  /*
-  ** ルートが変更されるたびに毎回実行（初期化も実行される）
-  */
+
+  window.dataLayer = window.dataLayer || [];
+  window.dataLayer.push({
+    event: 'gtm.js', 'gtm.start': new Date().getTime()
+  });
+
   app.router.afterEach((to, from) => {
     const currentUser = localStorage.getItem(
       `CognitoIdentityServiceProvider.${process.env.CLIENT_ID}.LastAuthUser`
     )
     console.log(currentUser)
-    window.dataLayer = window.dataLayer || []
-    dataLayer = [{ userID: currentUser }]
+    // window.dataLayer = window.dataLayer || []
+    dataLayer.push(to.gtm || { userID: currentUser })
+    // dataLayer = [{ userID: currentUser }]
+    console.log(to.fullPath)
     dataLayer.push(to.gtm || { pageType: 'PageView', pageUrl: to.fullPath })
   })
 }
