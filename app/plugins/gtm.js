@@ -24,5 +24,6 @@ export default ({ app }) => {
     console.log(currentUser)
     window.dataLayer = window.dataLayer || []
     dataLayer = [{ userID: currentUser }]
+    dataLayer.push(to.gtm || { pageType: 'PageView', pageUrl: to.fullPath })
   })
 }
