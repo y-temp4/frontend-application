@@ -25,6 +25,7 @@ export default ({ app }) => {
       `CognitoIdentityServiceProvider.${process.env.CLIENT_ID}.LastAuthUser`
     )
     console.log(currentUser)
+    dataLayer.push({ 'event': 'pageview' })
     // window.dataLayer = window.dataLayer || []
     dataLayer.push(to.gtm || { userID: currentUser })
     // dataLayer = [{ userID: currentUser }]
