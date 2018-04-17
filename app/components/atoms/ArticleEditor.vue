@@ -89,8 +89,8 @@ export default {
         $('.area-body').mediumInsert({
           editor: editorElement,
           addons: {
-            Part: true,
-            embeds: false
+            Part: true
+            // embeds: false
           }
         })
       })
