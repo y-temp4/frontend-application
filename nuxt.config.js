@@ -21,8 +21,7 @@ module.exports = {
   */
   modules: [
     '@nuxtjs/axios',
-    '@nuxtjs/markdownit',
-    ['@nuxtjs/google-tag-manager', { id: 'GTM-5DZNDNB' }]
+    '@nuxtjs/markdownit'
   ],
   markdownit: {
     injected: true,
@@ -31,7 +30,8 @@ module.exports = {
   },
   plugins: [
     '~/plugins/axios',
-    '~/plugins/vuelidate'
+    '~/plugins/vuelidate',
+    { src: '~plugins/gtm.js', ssr: false }
   ],
   axios: {
     baseURL: process.env.BASE_URL,
