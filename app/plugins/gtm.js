@@ -15,12 +15,12 @@ export default ({ app }) => {
         'https://www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f);
   })(window, document, 'script', 'dataLayer', 'GTM-5DZNDNB');
 
-  window.dataLayer = window.dataLayer || [];
-  window.dataLayer.push({
-    event: 'gtm.js', 'gtm.start': new Date().getTime()
-  });
 
   app.router.afterEach((to, from) => {
+    window.dataLayer = window.dataLayer || [];
+    window.dataLayer.push({
+      event: 'gtm.js', 'gtm.start': new Date().getTime()
+    });
     const currentUser = localStorage.getItem(
       `CognitoIdentityServiceProvider.${process.env.CLIENT_ID}.LastAuthUser`
     )
