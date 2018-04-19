@@ -24,10 +24,10 @@ export default ({ app }) => {
     const currentUser = localStorage.getItem(
       `CognitoIdentityServiceProvider.${process.env.CLIENT_ID}.LastAuthUser`
     )
-    console.log(currentUser)
-    dataLayer.push({ 'event': 'pageview' })
+    // console.log(currentUser)
+    // dataLayer.push({ 'event': 'pageview' })
     dataLayer.push(to.gtm || { userId: currentUser })
-    console.log(to.fullPath)
-    dataLayer.push(to.gtm || { pageType: 'PageView', pageUrl: to.fullPath })
+    // console.log(to.fullPath)
+    // dataLayer.push(to.gtm || { pageType: 'PageView', pageUrl: to.fullPath })
   })
 }
