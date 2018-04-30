@@ -32,7 +32,7 @@ export default {
         event.target.offsetHeight,
         event.target.scrollHeight
       )
-      if (event.target.scrollTop + event.target.offsetHeight >= event.target.scrollHeight) {
+      if (event.target.scrollTop + event.target.offsetHeight >= event.target.scrollHeight - 10) {
         console.log(true)
         this.getNewPagesArticles()
       }
