@@ -26,7 +26,14 @@ export default {
   },
   methods: {
     infiniteScroll(event) {
+      console.log(
+        'event.target.scrollTop, event.target.offsetHeight, event.target.scrollHeight',
+        event.target.scrollTop,
+        event.target.offsetHeight,
+        event.target.scrollHeight
+      )
       if (event.target.scrollTop + event.target.offsetHeight >= event.target.scrollHeight) {
+        console.log(true)
         this.getNewPagesArticles()
       }
     },
