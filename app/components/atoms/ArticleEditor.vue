@@ -143,7 +143,6 @@ export default {
       await Promise.all(
         images.map(async (img) => {
           this.setIsSaving({ isSaving: true })
-
           const isBase64Image = img.src.includes('data:')
           const isNotUploadedImage = img.dataset.status !== 'uploaded'
           const isNotUploadingImage = img.dataset.status !== 'uploading'
