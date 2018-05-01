@@ -27,7 +27,7 @@ export default {
     title: String
   },
   computed: {
-    ...mapGetters('article', ['articleId']),
+    ...mapGetters('article', ['articleId', 'title', 'body']),
     ...mapGetters('user', ['showRestrictEditArticleModal'])
   },
   mounted() {
@@ -156,7 +156,15 @@ export default {
                 base64Image.match(':').index + 1,
                 base64Image.match(';').index
               )
-              const { articleId } = this.articleId === '' ? this.$route.params : this
+              let { articleId } = this.articleId === '' ? this.$route.params : this
+              if (articleId === undefined) {
+                const article = {
+                  title: this.title === '' ? ' ' : this.title,
+                  body: this.body.replace(/<div class="medium-insert-buttons"[\s\S]*/, '') + ' '
+                }
+                await this.postNewArticle({ article })
+                articleId = this.articleId
+              }
               const { image_url: imageUrl } = await this.postArticleImage({
                 articleId,
                 articleImage: base64Hash,
@@ -250,7 +258,8 @@ export default {
       'postArticleImage',
       'setRestrictEditArticleModal',
       'setIsSaving',
-      'setIsSaved'
+      'setIsSaved',
+      'postNewArticle'
     ]),
     ...mapActions('user', ['setRestrictEditArticleModal'])
   }

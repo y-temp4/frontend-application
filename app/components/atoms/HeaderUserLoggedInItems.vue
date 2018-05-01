@@ -56,7 +56,7 @@ export default {
   },
   async mounted() {
     await this.setCurrentUserInfo()
-    await this.getUsersAlisToken()
+    // await this.getUsersAlisToken()
     this.listen(window, 'click', (event) => {
       if (!this.$el.contains(event.target)) {
         this.closeMenu()
