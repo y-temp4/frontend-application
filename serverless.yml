@@ -25,6 +25,7 @@ package:
     - node_modules/caniuse-lite/**
     - node_modules/prettier/**
     - node_modules/yargs/**
+    - node_modules/postcss**/**
     - node_modules/typescript/**
     - node_modules/cssnano/**
     - node_modules/xxhashjs/**
@@ -36,6 +37,12 @@ package:
     - server/**
     - configs/**
     - nuxt.config.js
+    - node_modules/postcss/**
+    - node_modules/postcss-cssnext/**
+    - node_modules/postcss-import/**
+    - node_modules/postcss-import-resolver/**
+    - node_modules/postcss-loader/**
+    - node_modules/postcss-url/**
 
 functions:
   handler:
