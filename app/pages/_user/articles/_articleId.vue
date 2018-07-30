@@ -15,6 +15,7 @@ export default {
       const { articleId } = params
       await store.dispatch('article/getArticleDetail', { articleId })
     } catch (e) {
+      console.log('_articleId.vue', e)
       error({ statusCode: 404 })
     }
   },

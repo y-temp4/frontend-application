@@ -14,6 +14,7 @@ export default {
       await store.dispatch('user/setUserInfo', { userId: params.userId })
       await store.dispatch('user/getUserArticles', { userId: params.userId })
     } catch (e) {
+      console.log('_userId.vue', e)
       error({ statusCode: 404 })
     }
   },
