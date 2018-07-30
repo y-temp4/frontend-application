@@ -38,7 +38,7 @@ jobs:
       - run:
           name: deploy
           command: |
-            yarn build
+            NODE_ENV=production yarn build
             sudo apt-get -y -qq install awscli
             aws s3 cp .nuxt/dist/ s3://$DIST_S3_BUCKET_NAME/d/nuxt/dist --recursive
             aws s3 cp app/static/favicon.ico s3://$DIST_S3_BUCKET_NAME/d/nuxt/dist/
