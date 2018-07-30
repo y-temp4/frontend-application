@@ -1,4 +1,4 @@
-const isProduction = process.env.NODE_ENV === 'production'
+// const isProduction = process.env.NODE_ENV === 'production'
 
 const nuxtConfig = {
   /*
@@ -113,18 +113,18 @@ const nuxtConfig = {
   }
 }
 
-if (!isProduction) {
-  nuxtConfig.axios = {
-    prefix: '/api',
-    proxyHeaders: false,
-    proxy: true
-  }
-  nuxtConfig.proxy = {
-    '/api': {
-      target: process.env.BASE_URL,
-      pathRewrite: { '^/api': '/' }
-    }
-  }
-}
+// if (!isProduction) {
+//   nuxtConfig.axios = {
+//     prefix: '/api',
+//     proxyHeaders: false,
+//     proxy: true
+//   }
+//   nuxtConfig.proxy = {
+//     '/api': {
+//       target: process.env.BASE_URL,
+//       pathRewrite: { '^/api': '/' }
+//     }
+//   }
+// }
 
 module.exports = nuxtConfig
