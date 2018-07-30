@@ -2,6 +2,7 @@
   <div class="article-container">
     <app-header showDefaultHeaderNav class="logo-original"/>
     <div class="area-article">
+      {{ hoge }}
       <h1 class="area-title">{{ article.title }}</h1>
       <div class="area-content" v-html="article.body" />
       <!-- <article-tags :tags="article.tags"/> -->
@@ -68,6 +69,9 @@ export default {
     this.resetArticleCommentsLastEvaluatedKey()
   },
   computed: {
+    hoge() {
+      return process.env.NODE_ENV
+    },
     publishedAt() {
       return this.article.published_at || this.article.created_at
     },
