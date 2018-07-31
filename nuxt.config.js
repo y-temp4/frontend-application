@@ -74,15 +74,8 @@ const nuxtConfig = {
   },
   plugins: ['~/plugins/axios', '~/plugins/vuelidate', { src: '~plugins/gtm.js', ssr: false }],
   axios: {
-    prefix: '/api',
-    proxyHeaders: false,
-    proxy: true
-  },
-  proxy: {
-    '/api': {
-      target: process.env.BASE_URL,
-      pathRewrite: { '^/api': '/' }
-    }
+    baseURL: process.env.BASE_URL,
+    proxyHeaders: false
   },
   srcDir: 'app',
   router: {
