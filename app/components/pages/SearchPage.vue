@@ -4,7 +4,7 @@
     <h1 class="area-title">{{ title }}</h1>
     <form @submit.prevent="search" class="area-search">
       <input
-        type="text"
+        type="search"
         class="form-input"
         required
         maxlength="150"
