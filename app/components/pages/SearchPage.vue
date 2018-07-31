@@ -103,6 +103,7 @@ export default {
   methods: {
     async search() {
       try {
+        if (window.innerWidth <= 640) document.activeElement.blur()
         this.resetSearchData()
         this.query = this.inputText
         if (this.isFetchingData || !this.query) return
@@ -220,9 +221,9 @@ export default {
 
   .form-input {
     -webkit-appearance: none;
-    border-bottom: 1px dotted #232538;
     border-radius: 0;
     border: none;
+    border-bottom: 1px dotted #232538;
     font-family: YuGothic;
     padding: 5px 24px 5px 0;
     width: 400px;
