@@ -1,5 +1,3 @@
-const isProduction = process.env.NODE_ENV === 'production'
-
 const nuxtConfig = {
   /*
   ** Headers of the page
@@ -76,8 +74,15 @@ const nuxtConfig = {
   },
   plugins: ['~/plugins/axios', '~/plugins/vuelidate', { src: '~plugins/gtm.js', ssr: false }],
   axios: {
-    baseURL: process.env.BASE_URL,
-    proxyHeaders: false
+    prefix: '/api',
+    proxyHeaders: false,
+    proxy: true
+  },
+  proxy: {
+    '/api': {
+      target: process.env.BASE_URL,
+      pathRewrite: { '^/api': '/' }
+    }
   },
   srcDir: 'app',
   router: {
@@ -110,20 +115,6 @@ const nuxtConfig = {
     USER_POOL_ID: process.env.USER_POOL_ID,
     CLIENT_ID: process.env.CLIENT_ID,
     DOMAIN: process.env.DOMAIN
-  }
-}
-
-if (!isProduction) {
-  nuxtConfig.axios = {
-    prefix: '/api',
-    proxyHeaders: false,
-    proxy: true
-  }
-  nuxtConfig.proxy = {
-    '/api': {
-      target: process.env.BASE_URL,
-      pathRewrite: { '^/api': '/' }
-    }
   }
 }
 
