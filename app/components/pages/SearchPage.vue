@@ -2,7 +2,8 @@
   <div class="search-page-container" :class="showArticles ? 'article' : 'user'" @scroll="infiniteScroll">
     <app-header showDefaultHeaderNav showOnlySessionLinks class="logo-original"/>
     <h1 class="area-title">{{ title }}</h1>
-    <form @submit.prevent="search" class="area-search">
+    <!-- <form @submit.prevent="search" class="area-search"> -->
+    <form @submit.prevent="search" action onsubmit="return false;" class="area-search">
       <input
         type="search"
         class="form-input"
@@ -77,7 +78,7 @@ export default {
     this.showNav = !!this.query
   },
   async mounted() {
-    // this.$refs.searchInput.focus()
+    if (window.innerWidth > 640) this.$refs.searchInput.focus()
     this.inputText = this.$route.query.q
     await this.$nextTick()
     if (this.searchArticlesScrollHeight) this.$el.scrollTop = this.searchArticlesScrollHeight
