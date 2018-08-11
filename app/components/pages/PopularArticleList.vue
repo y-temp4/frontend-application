@@ -51,7 +51,7 @@ export default {
           event.target.scrollTop + event.target.offsetHeight >= event.target.scrollHeight - 10
         if (this.isLastPage || !isScrollBottom) return
 
-        await this.getPopularArticles({ topic: this.$route.query.topic || 'crypto' })
+        await this.getPopularArticles({ topic: this.$route.query.topic })
       } finally {
         this.isFetchingArticles = false
       }

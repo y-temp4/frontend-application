@@ -10,7 +10,7 @@ export default {
     PopularArticleList
   },
   async fetch({ store, query }) {
-    const topic = query.topic || 'crypto'
+    const topic = query.topic
     await store.dispatch('article/getTopics')
     store.dispatch('article/setTopicDisplayName', { topicName: topic })
     store.dispatch('article/resetArticleData')
