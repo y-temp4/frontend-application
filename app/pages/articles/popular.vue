@@ -9,7 +9,8 @@ export default {
   components: {
     PopularArticleList
   },
-  async fetch({ store, query }) {
+  async fetch({ store, query, route }) {
+    console.log('################### popular route', route)
     const topic = query.topic
     console.log('################### popular topic', topic)
   },
