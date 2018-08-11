@@ -9,6 +9,10 @@ export default {
   components: {
     NewArticleList
   },
+  async fetch({ store, query }) {
+    const topic = query.topic
+    console.log('################### recent topic', topic)
+  },
   async mounted() {
     // async fetch({ store, query }) {
     const topic = this.$route.query.topic
