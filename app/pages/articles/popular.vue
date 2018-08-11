@@ -9,14 +9,19 @@ export default {
   components: {
     PopularArticleList
   },
-  async fetch({ store, query }) {
-    const topic = query.topic
-    await store.dispatch('article/getTopics')
-    store.dispatch('article/setTopicDisplayName', { topicName: topic })
-    store.dispatch('article/resetArticleData')
-    await store.dispatch('article/getPopularArticles', { topic })
+  async mounted() {
+    // async fetch({ store, query }) {
+    const topic = this.$route.query.topic
+    await this.$store.dispatch('article/getTopics')
+    this.$store.dispatch('article/setTopicDisplayName', { topicName: topic })
+    this.$store.dispatch('article/resetArticleData')
+    await this.$store.dispatch('article/getPopularArticles', { topic })
+    // const topic = query.topic
+    // await store.dispatch('article/getTopics')
+    // store.dispatch('article/setTopicDisplayName', { topicName: topic })
+    // store.dispatch('article/resetArticleData')
+    // await store.dispatch('article/getPopularArticles', { topic })
   },
-  watchQuery: ['topic'],
   head() {
     return {
       title: `${this.$store.state.article.topicDisplayName} - 人気記事`,
