@@ -137,6 +137,7 @@ export default {
         })
         this.$refs.phoneNumber.value = ''
       } catch (error) {
+        console.log(error)
         let errorMessage = ''
         switch (error.code) {
           default:
