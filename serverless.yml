@@ -20,7 +20,6 @@ package:
     - package.json
     - yarn.lock
     - node_modules/prettier-eslint/**
-    - node_modules/babel**/**
     - node_modules/caniuse-db/**
     - node_modules/caniuse-lite/**
     - node_modules/prettier/**
