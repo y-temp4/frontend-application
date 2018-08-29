@@ -1,7 +1,7 @@
 service:
   name: ${env:NUXT_API_GATEWAY_NAME}
 
-frameworkVersion: ">=1.26.1"
+frameworkVersion: '>=1.26.1'
 
 provider:
   name: aws
@@ -34,6 +34,7 @@ package:
     - node_modules/**/bin/**
   include:
     - app/static/part.js
+    - app/static/sw.js
     - server/**
     - configs/**
     - nuxt.config.js
