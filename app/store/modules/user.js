@@ -561,6 +561,14 @@ const actions = {
   },
   resetNotificationData({ commit }) {
     commit(types.RESET_NOTIFICATION_DATA)
+  },
+  loginByLine() {
+    this.cognito.loginByLine()
+  },
+  checkAuth({ commit }, curUrl) {
+    const result = this.cognito.checkAuth(curUrl)
+    commit(types.SET_LOGGED_IN, { loggedIn: true })
+    commit(types.SET_CURRENT_USER, { user: result })
   }
 }
 

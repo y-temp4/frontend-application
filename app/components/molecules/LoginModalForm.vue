@@ -28,6 +28,7 @@
         </div>
       </form>
     </div>
+    <button @click="submitLine">LINEログイン</button>
     <div class="modal-footer">
       <p class="error-message">{{ errorMessage }}</p>
 
@@ -112,6 +113,9 @@ export default {
       this.setLoginModal({ showLoginModal: false })
       this.setSignUpModal({ showSignUpModal: true })
     },
+    submitLine() {
+      this.loginByLine()
+    },
     async onSubmit() {
       if (this.invalidSubmit) return
       const { userIdOrEmail, password } = this.loginModal.formData
@@ -161,7 +165,8 @@ export default {
       'resetPassword',
       'forgotPassword',
       'setSignUpAuthFlowModal',
-      'setSignUpAuthFlowInputPhoneNumberModal'
+      'setSignUpAuthFlowInputPhoneNumberModal',
+      'loginByLine'
     ])
   }
 }

@@ -19,6 +19,10 @@ export default {
     AppHeader,
     AppFooter
   },
+  mounted() {
+    const curUrl = window.location.href
+    this.$store.dispatch('user/checkAuth', curUrl)
+  },
   computed: {
     title() {
       return '利用規約'
