@@ -32,6 +32,10 @@
     <br>
     <br>
     <button @click="signIn('Yahoo')">Yahooでサインイン</button>
+    <br>
+    <br>
+    <button @click="signIn('Facebook')">Facebookでサインイン</button>
+
     <div class="modal-footer">
       <p class="error-message">{{ errorMessage }}</p>
 
