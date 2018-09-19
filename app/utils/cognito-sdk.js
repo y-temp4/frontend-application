@@ -32,6 +32,7 @@ export default class CognitoSDK {
 
   getUserSession() {
     this.cognitoUser = this.userPool.getCurrentUser()
+    console.log('this.cognitoUser', this.cognitoUser)
 
     return new Promise((resolve, reject) => {
       if (!this.cognitoUser) {

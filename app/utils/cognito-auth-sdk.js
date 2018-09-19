@@ -1,7 +1,7 @@
 import { CognitoAuth } from 'amazon-cognito-auth-js'
 
 export default class CognitoAuthSDK {
-  constructor(identityProvider) {
+  constructor(identityProvider, onSuccessCallBack) {
     this.authData = {
       ClientId: process.env.CLIENT_ID,
       UserPoolId: process.env.USER_POOL_ID,
@@ -16,8 +16,8 @@ export default class CognitoAuthSDK {
 
     this.auth.userhandler = {
       onSuccess: function(result) {
-        alert('成功した！！！')
         console.log('onSuccess', result)
+        if (typeof onSuccessCallBack === 'function') onSuccessCallBack()
       },
       onFailure: function(err) {
         console.log(err)
@@ -47,8 +47,8 @@ export default class CognitoAuthSDK {
   }
 
   checkAuth(curUrl) {
-    console.log('checkAuth', curUrl)
-    this.auth.parseCognitoWebResponse(curUrl)
+    const result = this.auth.parseCognitoWebResponse(curUrl)
+    console.log('checkAuth', result)
   }
 
   logout() {

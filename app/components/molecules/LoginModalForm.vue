@@ -28,7 +28,10 @@
         </div>
       </form>
     </div>
-    <button @click="submitLine">LINEログイン</button>
+    <button @click="signIn('LINE')">LINEでサインイン</button>
+    <br>
+    <br>
+    <button @click="signIn('Yahoo')">Yahooでサインイン</button>
     <div class="modal-footer">
       <p class="error-message">{{ errorMessage }}</p>
 
@@ -113,8 +116,8 @@ export default {
       this.setLoginModal({ showLoginModal: false })
       this.setSignUpModal({ showSignUpModal: true })
     },
-    submitLine() {
-      this.loginByLine()
+    signIn(identityProvider) {
+      this.signUpByIdProvider({ identityProvider })
     },
     async onSubmit() {
       if (this.invalidSubmit) return
@@ -166,7 +169,8 @@ export default {
       'forgotPassword',
       'setSignUpAuthFlowModal',
       'setSignUpAuthFlowInputPhoneNumberModal',
-      'loginByLine'
+      'loginByLine',
+      'signUpByIdProvider'
     ])
   }
 }
