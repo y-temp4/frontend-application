@@ -2,6 +2,7 @@ import { uniqBy } from 'lodash'
 import { BigNumber } from 'bignumber.js'
 import * as types from '../mutation-types'
 import CognitoSDK from '~/utils/cognito-sdk'
+import CognitoAuthSDK from '~/utils/cognito-auth-sdk'
 
 const namespaced = true
 
@@ -114,7 +115,8 @@ const state = () => ({
     isConfirmationModal: false,
     isCompletedModal: false
   },
-  tipTokenAmount: 0
+  tipTokenAmount: 0,
+  identityProvider: ''
 })
 
 const getters = {
@@ -334,6 +336,7 @@ const actions = {
   async getUserSession({ commit, dispatch }) {
     try {
       const result = await this.cognito.getUserSession()
+      console.log('getUserSession', result)
       commit(types.SET_LOGGED_IN, { loggedIn: true })
       commit(types.SET_CURRENT_USER, { user: result })
       return result
@@ -562,13 +565,35 @@ const actions = {
   resetNotificationData({ commit }) {
     commit(types.RESET_NOTIFICATION_DATA)
   },
+  initCognitoAuth({ state }, { identityProvider }) {
+    state.identityProvider = identityProvider
+    this.cognitoAuth = new CognitoAuthSDK(identityProvider)
+    console.log('initCognitoAuth', this.cognitoAuth)
+  },
+  signUpByIdProvider({ dispatch }, { identityProvider }) {
+    dispatch('initCognitoAuth', { identityProvider })
+    this.cognitoAuth.signUp()
+  },
   loginByLine() {
     this.cognito.loginByLine()
   },
-  checkAuth({ commit }, curUrl) {
-    const result = this.cognito.checkAuth(curUrl)
+  async checkAuth({ commit, state, dispatch }, { url }) {
+    dispatch('initCognitoAuth', { identityProvider: state.identityProvider })
+    console.log('this.cognitoAuth', this.cognitoAuth)
+    const result = this.cognitoAuth.checkAuth(url)
     commit(types.SET_LOGGED_IN, { loggedIn: true })
     commit(types.SET_CURRENT_USER, { user: result })
+    return result
+  },
+  async logoutFromIdProvider({ commit, state }) {
+    try {
+      const result = await this.cognitoAuth.logout()
+      commit(types.SET_LOGGED_IN, { loggedIn: false })
+      commit(types.SET_CURRENT_USER, { user: null })
+      return result
+    } catch (error) {
+      return Promise.reject(error)
+    }
   }
 }
 

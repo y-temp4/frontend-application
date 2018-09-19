@@ -5,7 +5,6 @@ import {
   CognitoUserAttribute,
   CognitoRefreshToken
 } from 'amazon-cognito-identity-js'
-import { CognitoAuth } from 'amazon-cognito-auth-js'
 import { config, CognitoIdentityServiceProvider } from 'aws-sdk'
 
 export default class CognitoSDK {
@@ -14,36 +13,12 @@ export default class CognitoSDK {
       UserPoolId: process.env.USER_POOL_ID,
       ClientId: process.env.CLIENT_ID
     }
-    this.authData = {
-      ClientId: process.env.CLIENT_ID,
-      AppWebDomain: 'alis-test-narisada-require-email.auth.ap-northeast-1.amazoncognito.com', // Exc
-      TokenScopesArray: ['openid', 'email', 'profile', 'aws.cognito.signin.user.admin', 'phone'], //
-      RedirectUriSignIn: 'http://localhost:3000/terms', // alisの開発環境のURLに変更する必要がある
-      // RedirectUriSignIn: 'http://localhost:8888/', // alisの開発環境のURLに変更する必要がある
-      RedirectUriSignOut: 'http://localhost:8888/', // alisの開発環境のURLに変更する必要がある
-      IdentityProvider: 'LINETEST', // LINEのプロバイダー
-      UserPoolId: process.env.USER_POOL_ID,
-      AdvancedSecurityDataCollectionFlag: false
-    }
+
     this.userPool = new CognitoUserPool(this.poolData)
-    this.auth = new CognitoAuth(this.authData)
-
-    this.result = ''
-
-    this.auth.userhandler = {
-      onSuccess: function(result) {
-        alert('成功した！！！')
-        console.log(result)
-        this.result = result
-      },
-      onFailure: function(err) {
-        console.log(err)
-        alert('Error!' + err)
-      }
-    }
 
     config.region = process.env.REGION
   }
+
   loginByLine() {
     this.auth.useCodeGrantFlow()
     const session = this.auth.getSession()
@@ -153,15 +128,20 @@ export default class CognitoSDK {
   }
 
   updatePhoneNumber({ userId, phoneNumber }) {
+    console.log(2)
+    console.log('this.cognitoUser', this.cognitoUser)
+
     const attributeList = []
     const attributePhoneNumber = new CognitoUserAttribute({
       Name: 'phone_number',
       Value: phoneNumber
     })
     attributeList.push(attributePhoneNumber)
+
     return new Promise((resolve, reject) => {
       this.cognitoUser.updateAttributes(attributeList, (err, result) => {
         if (err) {
+          console.log('updatePhoneNumber error', err)
           reject(err)
           return
         }
@@ -219,7 +199,6 @@ export default class CognitoSDK {
 
   logoutUser({ userId }) {
     this.cognitoUser = this.getCognitoUser(userId)
-    this.auth.signOut()
     return this.cognitoUser.signOut()
   }
 

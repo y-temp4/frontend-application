@@ -118,6 +118,8 @@ export default {
       this.hideSignUpAuthFlowInputPhoneNumberError({ type })
     },
     async onSubmit() {
+      await this.getUserSession()
+      console.log(1)
       if (this.invalidSubmit) return
       const { userIdOrEmail } = this.signUpAuthFlowModal.login.formData
       const { phoneNumber } = this.signUpAuthFlowModal.inputPhoneNumber.formData
@@ -153,7 +155,8 @@ export default {
       'hideSignUpAuthFlowInputPhoneNumberError',
       'setSignUpAuthFlowInputAuthCodeModal',
       'updatePhoneNumber',
-      'sendConfirm'
+      'sendConfirm',
+      'getUserSession'
     ])
   }
 }

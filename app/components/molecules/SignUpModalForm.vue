@@ -44,6 +44,10 @@
         </div>
       </form>
     </div>
+    <button @click="signUp('LINE')">LINEでサインアップ</button>
+    <br>
+    <br>
+    <button @click="signUp('Yahoo')">Yahooでサインアップ</button>
     <div class="modal-footer">
       <p class="error-message">{{ errorMessage }}</p>
 
@@ -147,6 +151,9 @@ export default {
       this.setSignUpModal({ showSignUpModal: false })
       this.setLoginModal({ showLoginModal: true })
     },
+    signUp(identityProvider) {
+      this.signUpByIdProvider({ identityProvider })
+    },
     async onSubmit() {
       if (this.invalidSubmit) return
       const { userId, email, password } = this.signUpModal.formData
@@ -181,7 +188,8 @@ export default {
       'register',
       'setSignUpModal',
       'setLoginModal',
-      'resetPassword'
+      'resetPassword',
+      'signUpByIdProvider'
     ])
   }
 }

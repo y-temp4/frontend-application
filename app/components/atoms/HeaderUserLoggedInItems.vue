@@ -130,7 +130,8 @@ export default {
     logoutUser() {
       try {
         this.logout()
-        location.href = '/'
+        this.logoutFromIdProvider()
+        location.href = '/articles/recent'
         this.sendNotification({ text: 'ログアウトしました。' })
       } catch (error) {
         this.sendNotification({ text: 'ログアウトに失敗しました。', type: 'warning' })
@@ -184,7 +185,8 @@ export default {
       'resetSearchUsersPage',
       'resetSearchUsersIsLastPage',
       'resetNotificationData',
-      'getNotifications'
+      'getNotifications',
+      'logoutFromIdProvider'
     ]),
     ...mapActions('article', [
       'resetSearchArticles',

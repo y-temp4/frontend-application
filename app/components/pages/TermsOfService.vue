@@ -20,8 +20,7 @@ export default {
     AppFooter
   },
   mounted() {
-    const curUrl = window.location.href
-    this.$store.dispatch('user/checkAuth', curUrl)
+    this.$store.dispatch('user/checkAuth', { url: this.$route.fullPath })
   },
   computed: {
     title() {
