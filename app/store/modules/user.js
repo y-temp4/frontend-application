@@ -565,9 +565,9 @@ const actions = {
   resetNotificationData({ commit }) {
     commit(types.RESET_NOTIFICATION_DATA)
   },
-  initCognitoAuth({ state }, { identityProvider, onSuccessCallBack }) {
+  initCognitoAuth({ state }, { identityProvider }) {
     state.identityProvider = identityProvider
-    this.cognitoAuth = new CognitoAuthSDK(identityProvider, onSuccessCallBack)
+    this.cognitoAuth = new CognitoAuthSDK(identityProvider)
     console.log('initCognitoAuth', this.cognitoAuth)
   },
   signUpByIdProvider({ dispatch }, { identityProvider }) {
@@ -578,21 +578,20 @@ const actions = {
     this.cognito.loginByLine()
   },
   async checkAuth({ commit, state, dispatch }, { url }) {
-    const onSuccessCallBack = async () => {
-      alert('成功')
-      const result = await dispatch('getUserSession')
-      console.log('result', result)
-      const { phoneNumberVerified } = result
-      console.log('phoneNumberVerified', phoneNumberVerified)
-      if (!phoneNumberVerified) {
-        dispatch('setSignUpAuthFlowModal', { showSignUpAuthFlowModal: true })
-        dispatch('setSignUpAuthFlowInputPhoneNumberModal', {
-          isSignUpAuthFlowInputPhoneNumberModal: true
-        })
-      }
-    }
-    dispatch('initCognitoAuth', { identityProvider: state.identityProvider, onSuccessCallBack })
+    dispatch('initCognitoAuth', { identityProvider: state.identityProvider })
     const result = this.cognitoAuth.checkAuth(url)
+    const getOnSuccessResult = await this.cognitoAuth.getOnSuccessResult()
+    console.log('getOnSuccessResult', getOnSuccessResult)
+
+    const session = await dispatch('getUserSession')
+    const { phoneNumberVerified } = session
+    console.log('phoneNumberVerified', phoneNumberVerified)
+    if (!phoneNumberVerified) {
+      dispatch('setSignUpAuthFlowModal', { showSignUpAuthFlowModal: true })
+      dispatch('setSignUpAuthFlowInputPhoneNumberModal', {
+        isSignUpAuthFlowInputPhoneNumberModal: true
+      })
+    }
     commit(types.SET_LOGGED_IN, { loggedIn: true })
     commit(types.SET_CURRENT_USER, { user: result })
     return result

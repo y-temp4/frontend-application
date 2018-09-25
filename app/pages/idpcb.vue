@@ -13,7 +13,7 @@ export default {
     const topic = 'crypto'
     await store.dispatch('article/getTopics')
     store.dispatch('article/resetArticleData')
-    await store.dispatch('article/getPopularArticles', { topic })
+    await store.dispatch('article/getNewArticles', { topic })
   },
   async mounted() {
     this.$store.dispatch('user/checkAuth', { url: this.$route.fullPath })

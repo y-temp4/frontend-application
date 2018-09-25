@@ -1,7 +1,7 @@
 import { CognitoAuth } from 'amazon-cognito-auth-js'
 
 export default class CognitoAuthSDK {
-  constructor(identityProvider, onSuccessCallBack) {
+  constructor(identityProvider) {
     this.authData = {
       ClientId: process.env.CLIENT_ID,
       UserPoolId: process.env.USER_POOL_ID,
@@ -14,18 +14,22 @@ export default class CognitoAuthSDK {
     }
     this.auth = new CognitoAuth(this.authData)
 
-    this.auth.userhandler = {
-      onSuccess: function(result) {
-        console.log('onSuccess', result)
-        if (typeof onSuccessCallBack === 'function') onSuccessCallBack()
-      },
-      onFailure: function(err) {
-        console.log(err)
-        alert('Error!' + err)
-      }
-    }
-
     this.auth.setState('alis')
+  }
+
+  getOnSuccessResult() {
+    return new Promise((resolve) => {
+      this.auth.userhandler = {
+        onSuccess: function(result) {
+          console.log('onSuccess', result)
+          resolve(result)
+        },
+        onFailure: function(err) {
+          console.log(err)
+          alert('Error!' + err)
+        }
+      }
+    })
   }
 
   signUp() {
