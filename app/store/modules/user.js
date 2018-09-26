@@ -32,6 +32,7 @@ const state = () => ({
     isInputAuthCodeModal: false,
     isCompletedPhoneNumberAuthModal: false,
     isProfileSettingsModal: false,
+    isInputAliasUserIdModal: false,
     login: {
       formData: {
         userIdOrEmail: '',
@@ -66,6 +67,14 @@ const state = () => ({
       formError: {
         userDisplayName: false,
         selfIntroduction: false
+      }
+    },
+    inputAliasUserId: {
+      formData: {
+        aliasUserId: ''
+      },
+      formError: {
+        aliasUserId: false
       }
     }
   },
@@ -613,7 +622,30 @@ const actions = {
     const session = await dispatch('getUserSession')
     commit(types.SET_LOGGED_IN, { loggedIn: true })
     commit(types.SET_CURRENT_USER, { user: session })
-    return result.hasAliasUserId || false
+    const hasAliasUserId = result.hasAliasUserId === 'true'
+    return hasAliasUserId
+  },
+  setSignUpAuthFlowInputAliasUserIdModal({ state }, { isShow }) {
+    state.signUpAuthFlowModal.isInputAliasUserIdModal = isShow
+  },
+  setSignUpAuthFlowAliasUserId({ state }, { aliasUserId }) {
+    state.signUpAuthFlowModal.inputAliasUserId.formData.aliasUserId = aliasUserId
+  },
+  showSignUpAuthFlowInputAliasUserIdError({ state }, { type }) {
+    state.signUpAuthFlowModal.inputAliasUserId.formError[type] = true
+  },
+  hideSignUpAuthFlowInputAliasUserIdError({ state }, { type }) {
+    state.signUpAuthFlowModal.inputAliasUserId.formError[type] = false
+  },
+  async postAliasUserId({state}, {aliasUserId}) {
+    try {
+      const userId = localStorage.getItem(
+        `CognitoIdentityServiceProvider.${process.env.CLIENT_ID}.LastAuthUser`
+      )
+      await this.$axios.$post('/alias_user', { user_id: userId, alias_user_id: aliasUserId })
+    } catch (error) {
+      return Promise.reject(error)
+    }
   }
 }
 
