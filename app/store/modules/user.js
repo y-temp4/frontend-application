@@ -605,6 +605,15 @@ const actions = {
     } catch (error) {
       return Promise.reject(error)
     }
+  },
+  async checkAuthByLine({ commit, dispatch }, { code }) {
+    dispatch('initCognitoAuth', { identityProvider: state.identityProvider })
+    const result = await this.$axios.$post('/sns_login_initiate', { code })
+    this.cognitoAuth.setTokens(result)
+    const session = await dispatch('getUserSession')
+    commit(types.SET_LOGGED_IN, { loggedIn: true })
+    commit(types.SET_CURRENT_USER, { user: session })
+    return result.hasAliasUserId || false
   }
 }
 

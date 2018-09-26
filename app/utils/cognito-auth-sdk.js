@@ -17,6 +17,15 @@ export default class CognitoAuthSDK {
     this.auth.setState('alis')
   }
 
+  setTokens({ lastAuthUser, idToken, accessToken, refreshToken }) {
+    const key = `CognitoIdentityServiceProvider.${process.env.CLIENT_ID}`
+    const keyWithLastAuthUser = `${key}.${lastAuthUser}`
+    localStorage.setItem(`${key}.LastAuthUser`, lastAuthUser)
+    localStorage.setItem(`${keyWithLastAuthUser}.idToken`, idToken)
+    localStorage.setItem(`${keyWithLastAuthUser}.accessToken`, accessToken)
+    localStorage.setItem(`${keyWithLastAuthUser}.refreshToken`, refreshToken)
+  }
+
   getOnSuccessResult() {
     return new Promise((resolve) => {
       this.auth.userhandler = {
