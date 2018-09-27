@@ -15,16 +15,24 @@ export default {
         this.$store.dispatch('user/setSignUpAuthFlowModal', { showSignUpAuthFlowModal: true })
         this.$store.dispatch('user/setSignUpAuthFlowInputAliasUserIdModal', { isShow: true })
       }
+      global.showCompleteModal = () => {
+        this.$store.dispatch('user/setSignUpAuthFlowModal', { showSignUpAuthFlowModal: true })
+        this.$store.dispatch('user/setSignUpAuthFlowCompletedAuthModal', { isShow: true })
+      }
       const { code } = this.$route.query
       console.log('this.$route.query.code', code)
-      if (code) {
-        const hasAliasUserId = await this.$store.dispatch('user/checkAuthByLine', { code })
-        // const hasAliasUserId = false
-        if (!hasAliasUserId) {
-          this.$store.dispatch('user/setSignUpAuthFlowModal', { showSignUpAuthFlowModal: true })
-          this.$store.dispatch('user/setSignUpAuthFlowInputAliasUserIdModal', { isShow: true })
-        }
+      if (!code) return
+      const { hasAliasUserId, status } = await this.$store.dispatch('user/checkAuthByLine', {
+        code
+      })
+      if (!hasAliasUserId) {
+        this.$store.dispatch('user/setSignUpAuthFlowModal', { showSignUpAuthFlowModal: true })
+        this.$store.dispatch('user/setSignUpAuthFlowInputAliasUserIdModal', { isShow: true })
+        return
       }
+      if (status === 'login') return
+      this.$store.dispatch('user/setSignUpAuthFlowModal', { showSignUpAuthFlowModal: true })
+      this.$store.dispatch('user/setSignUpAuthFlowCompletedAuthModal', { isShow: true })
     } catch (error) {
       console.error(error)
     }

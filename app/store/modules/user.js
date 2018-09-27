@@ -33,6 +33,7 @@ const state = () => ({
     isCompletedPhoneNumberAuthModal: false,
     isProfileSettingsModal: false,
     isInputAliasUserIdModal: false,
+    isCompletedAuthModal: false,
     login: {
       formData: {
         userIdOrEmail: '',
@@ -125,7 +126,10 @@ const state = () => ({
     isCompletedModal: false
   },
   tipTokenAmount: 0,
-  identityProvider: ''
+  identityProvider: '',
+  session: {
+    status: ''
+  }
 })
 
 const getters = {
@@ -157,7 +161,8 @@ const getters = {
   searchUsers: (state) => state.searchUsers,
   showTipModal: (state) => state.showTipModal,
   tipFlowModal: (state) => state.tipFlowModal,
-  tipTokenAmount: (state) => state.tipTokenAmount
+  tipTokenAmount: (state) => state.tipTokenAmount,
+  session: (state) => state.session
 }
 
 const actions = {
@@ -619,11 +624,13 @@ const actions = {
     dispatch('initCognitoAuth', { identityProvider: state.identityProvider })
     const result = await this.$axios.$post('/sns_login_initiate', { code })
     this.cognitoAuth.setTokens(result)
+    console.log('sns_login_initiate result', result)
     const session = await dispatch('getUserSession')
     commit(types.SET_LOGGED_IN, { loggedIn: true })
     commit(types.SET_CURRENT_USER, { user: session })
     const hasAliasUserId = result.hasAliasUserId === 'true'
-    return hasAliasUserId
+    const status = result.status
+    return { hasAliasUserId, status }
   },
   setSignUpAuthFlowInputAliasUserIdModal({ state }, { isShow }) {
     state.signUpAuthFlowModal.isInputAliasUserIdModal = isShow
@@ -637,15 +644,19 @@ const actions = {
   hideSignUpAuthFlowInputAliasUserIdError({ state }, { type }) {
     state.signUpAuthFlowModal.inputAliasUserId.formError[type] = false
   },
-  async postAliasUserId({state}, {aliasUserId}) {
+  async postAliasUserId({ state }, { aliasUserId }) {
     try {
       const userId = localStorage.getItem(
         `CognitoIdentityServiceProvider.${process.env.CLIENT_ID}.LastAuthUser`
       )
+      // await this.$axios.$post('/alias_user', { alias_user_id: aliasUserId })
       await this.$axios.$post('/alias_user', { user_id: userId, alias_user_id: aliasUserId })
     } catch (error) {
       return Promise.reject(error)
     }
+  },
+  setSignUpAuthFlowCompletedAuthModal({ state }, { isShow }) {
+    state.signUpAuthFlowModal.isCompletedAuthModal = isShow
   }
 }
 

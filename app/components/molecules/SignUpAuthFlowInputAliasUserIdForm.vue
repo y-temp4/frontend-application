@@ -150,6 +150,10 @@ export default {
     max-width: 400px;
     width: 80%;
 
+    &-group {
+      position: relative;
+    }
+
     &-label {
       color: #030303;
       font-size: 14px;
@@ -173,6 +177,14 @@ export default {
       &:focus {
         outline: 0;
       }
+    }
+
+    .error-message {
+      bottom: 0;
+      color: #f06273;
+      font-size: 12px;
+      position: absolute;
+      width: 100%;
     }
 
     .error {
