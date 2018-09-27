@@ -15,8 +15,8 @@
         alt="completed-auth-image">
     </div>
     <div class="modal-footer">
-      <app-button class="to-next-step-button" @click="transitToProfileSettings">
-        プロフィールを作成する
+      <app-button class="to-next-step-button" @click="transitToNextStep">
+        {{ phoneNumberVerified ? 'プロフィールを作成する' : '電話番号認証へ進む' }}
       </app-button>
       <button class="to-top-button" @click="transitToTop">
         TOPに戻る
@@ -26,21 +26,35 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex'
+import { mapActions, mapGetters } from 'vuex'
 import AppButton from '../atoms/AppButton'
 
 export default {
   components: {
     AppButton
   },
+  async mounted() {
+    console.log(111)
+    await this.getUserSession()
+  },
+  computed: {
+    phoneNumberVerified() {
+      return this.currentUser.phoneNumberVerified
+    },
+    ...mapGetters('user', ['currentUser'])
+  },
   methods: {
-    transitToProfileSettings() {
-      this.setSignUpAuthFlowCompletedAuthModal({
-        isShow: false
-      })
-      this.setSignUpAuthFlowProfileSettingsModal({
-        isSignUpAuthFlowProfileSettingsModal: true
-      })
+    transitToNextStep() {
+      this.setSignUpAuthFlowCompletedAuthModal({ isShow: false })
+      if (this.phoneNumberVerified) {
+        this.setSignUpAuthFlowProfileSettingsModal({
+          isSignUpAuthFlowProfileSettingsModal: true
+        })
+      } else {
+        this.setSignUpAuthFlowInputPhoneNumberModal({
+          isSignUpAuthFlowInputPhoneNumberModal: true
+        })
+      }
     },
     transitToTop() {
       document.querySelector('html,body').style.overflow = ''
@@ -51,7 +65,9 @@ export default {
     ...mapActions('user', [
       'setSignUpAuthFlowModal',
       'setSignUpAuthFlowCompletedAuthModal',
-      'setSignUpAuthFlowProfileSettingsModal'
+      'setSignUpAuthFlowProfileSettingsModal',
+      'getUserSession',
+      'setSignUpAuthFlowInputPhoneNumberModal'
     ])
   }
 }
