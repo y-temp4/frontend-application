@@ -200,6 +200,7 @@ const actions = {
         dispatch('getLikesCount', { articleId }),
         dispatch('getArticleComments', { articleId })
       ])
+      console.log('getArticleDetail comments', comments)
       commit(types.SET_LIKES_COUNT, { likesCount })
       commit(types.SET_ARTICLE_DETAIL, { article: { ...article, userInfo, alisToken, comments } })
     } catch (error) {
@@ -214,6 +215,7 @@ const actions = {
       dispatch('getLikesCount', { articleId }),
       dispatch('getArticleComments', { articleId })
     ])
+    console.log('getPublicArticleDetail comments', comments)
     commit(types.SET_LIKES_COUNT, { likesCount })
     commit(types.SET_ARTICLE_DETAIL, { article: { ...article, userInfo, alisToken, comments } })
     commit(types.SET_ARTICLE_ID, { articleId })
