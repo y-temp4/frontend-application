@@ -94,7 +94,8 @@ module.exports = {
   },
   srcDir: 'app',
   router: {
-    base: '/'
+    base: '/',
+    prefetchLinks: false
   },
   render: {
     /**
