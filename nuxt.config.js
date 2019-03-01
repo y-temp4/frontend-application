@@ -98,13 +98,9 @@ module.exports = {
     prefetchLinks: false
   },
   render: {
-    /**
-     * compression を通すと API Gateway がレスポンスを返せないので
-     * なにもしないミドルウェアを定義しておく
-     */
-    compressor: (req, res, next) => {
-      next()
-    }
+    etag: false,
+    // Disabled compression
+    compressor: { threshold: Infinity }
   },
   build: {
     publicPath: `https://${process.env.DOMAIN}/d/nuxt/dist/`,
