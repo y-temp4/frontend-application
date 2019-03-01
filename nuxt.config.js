@@ -94,12 +94,9 @@ module.exports = {
   },
   srcDir: 'app',
   router: {
-    base: '/',
-    prefetchLinks: false
+    base: '/'
   },
   render: {
-    etag: false,
-    // Disabled compression
     compressor: { threshold: Infinity }
   },
   build: {

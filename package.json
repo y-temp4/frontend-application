@@ -5,7 +5,7 @@
   "author": "y-temp4 <y.temp4@gmail.com>",
   "private": true,
   "scripts": {
-    "dev": "cross-env NODE_ENV=development nuxt --config-file nuxt.config.development.js",
+    "dev": "cross-env NODE_ENV=development HOST=0.0.0.0 nuxt --config-file nuxt.config.development.js",
     "build": "nuxt build",
     "start": "nuxt start",
     "generate": "nuxt generate",
@@ -34,7 +34,7 @@
     "medium-editor": "^5.23.3",
     "moment": "^2.24.0",
     "normalize.css": "^8.0.1",
-    "nuxt": "^2.4.5",
+    "nuxt": "^2.3.4",
     "smoothscroll-polyfill": "^0.4.3",
     "url-regex": "^4.1.1",
     "vue-chartjs": "^3.4.0",
